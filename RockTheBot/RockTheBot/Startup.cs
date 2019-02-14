@@ -139,7 +139,11 @@ namespace Ready19.RockTheBot
                 // Translation middleware setup
                 var translator = new MicrosoftTranslator(TranslationKey);
 
-                //TODO: complete the code!
+                var translationMiddleware = new TranslationMiddleware(
+                                                        translator,
+                                                        userState.CreateProperty<string>("LanguagePreference"));
+
+                options.Middleware.Add(translationMiddleware);
             });
 
             // Create and register state accessors.

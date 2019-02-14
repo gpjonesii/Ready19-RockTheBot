@@ -81,7 +81,11 @@ namespace Ready19.RockTheBot
             {
                 if (didBotWelcomeUser.DidBotWelcomeUser == false)
                 {
-                    //TODO: complete the code!
+                    didBotWelcomeUser.DidBotWelcomeUser = true;
+
+                    // Update user state flag to reflect bot handled first user interaction.
+                    await _accessors.WelcomeUserState.SetAsync(turnContext, didBotWelcomeUser);
+                    await _accessors.UserState.SaveChangesAsync(turnContext);
                 }
 
                 string userLanguage = await _accessors.LanguagePreference.GetAsync(turnContext, () => TranslationSettings.DefaultLanguage) ?? TranslationSettings.DefaultLanguage;
@@ -182,7 +186,9 @@ namespace Ready19.RockTheBot
             reply.Attachments = new List<Attachment>();
             List<CardAction> cardButtons = new List<CardAction>();
 
-            // TODO: complete the code!
+            cardButtons.Add(new MultilingualCardAction(language) { CardTitle = "English", Type = ActionTypes.PostBack, Value = EnglishEnglish });
+            cardButtons.Add(new MultilingualCardAction(language) { CardTitle = "Italian", Type = ActionTypes.PostBack, Value = EnglishItalian });
+
             HeroCard heroCard = new HeroCard()
             {
                 Buttons = cardButtons,
